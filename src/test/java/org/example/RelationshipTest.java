@@ -80,5 +80,12 @@ public class RelationshipTest
         brigitte.addProduct(ipad);
         brigitte.addProduct(gourde);
         CustomerDAO.create(brigitte);
+
+        /************************/
+
+        for(Product product : brigitte.getProducts()){
+            System.out.println(product);
+        }
+
     }
 }

@@ -1,6 +1,10 @@
 package org.example.entity;
 
+import org.example.util.Gender;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -24,10 +28,18 @@ public class Customer {
     @Column(name="zip_code")
     private String zipCode;
     private Integer state;
+    private Gender gender; // 0:MALE / 1:FEMALE / 2:OTHER
 
     @OneToOne
     @JoinColumn(name="payment_id")
-    private Payment payment;
+    private Payment payment; // numéro de Carte bleu
+
+    @ManyToOne
+    @JoinColumn(name="delivery_address_id")
+    private Address deliveryAddress; // 1 seule adresse par Customer
+
+    @ManyToMany
+    private List<Product> products = new ArrayList<>();
 
     public Customer(){
     }
@@ -129,6 +141,34 @@ public class Customer {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public void addProduct(Product product){
+        this.products.add(product);
+    }
+
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public void setNotNullData(Customer newCustomerData){
